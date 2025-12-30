@@ -1,0 +1,111 @@
+import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+// form
+import { useForm } from "react-hook-form";
+//Mensajes
+import { toast } from 'react-hot-toast';
+// icons
+import { AiOutlineMail } from "react-icons/ai";
+import { RiLockPasswordLine } from "react-icons/ri";
+import { MdOutlineVisibilityOff } from "react-icons/md";
+// logo
+import logo from "../../../public/logo.png";
+import imgFondo from "../../../public/img-fondo.png";
+
+const LoginPage = () => {
+    const navigate = useNavigate();
+    const {  register, handleSubmit, formState: {errors} } = useForm();
+
+    const onSubmit = handleSubmit(data => {
+        console.log(data);        
+    });
+    
+
+    return (
+    <main 
+        className="w-full min-h-screen bg-gray-600 flex flex-col justify-center items-center"
+        style={{ backgroundImage: `url(${imgFondo})`, backgroundRepeat: `no-repeat` }}
+    >
+        <section className="w-[90%] bg-white rounded-sm p-7 shadow-lg md:w-[50%]">
+            {/* Title section */}
+            <section className="w-full flex justify-center">
+                <img src={logo} alt="logo de la empresa" className="w-20 h-24 self-start mt-2 -mr-5" />
+                <div className="flex flex-col justify-center text-violet-950">
+                    <h1 className="font-bold text-3xl leading-tight">vekind</h1>
+                    <span className="text-lg -mt-2">network</span>
+                </div>                
+            </section>
+            {/* Text Section */}
+            <div className="w-full text-">
+                <p className="w-full text-center  text-gray-950 font-medium">¡Empieza a conectar con tu comunidad ante buenas acciones!</p>
+            </div>
+            {/* form */}
+            <form 
+                onSubmit={onSubmit} 
+                className="w-full flex flex-col justify-center items-center pt-6">
+                {/* email */}
+                <label htmlFor="email" className="w-full text-gray-950">
+                    Correo Electrónico:
+                    <span className="flex items-center border border-gray-400 mt-1.5 py-1 px-2 rounded-sm"><AiOutlineMail className="mr-2 text-sky-700" />
+                        <input type="text" placeholder="Ingresa correo" className="w-80 text-gray-600 outline-none"
+                        {...register('email',{
+                            required: {
+                                value: true,
+                                message: 'Correo requerido'
+                                },
+                                pattern: {
+                                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                    message: 'Correo invalido'
+                                },
+                        })}  
+                        />
+                    </span>
+                </label>
+                {
+                    errors.email && <span className="text-red-600">{errors.email.message}</span>
+                }
+                {/* password */}
+                <label htmlFor="password" className="w-full mt-2.5  text-gray-950">
+                    Contraseña:
+                    <span className="w-full flex items-center border border-gray-400 mt-1.5 py-1 px-2 rounded-sm">
+                        <RiLockPasswordLine className="mr-2 text-sky-700" />
+                        <input 
+                            type="password" 
+                            placeholder="Ingresa tu contraseña" 
+                            className="w-80 flex-1 text-gray-600 outline-none"
+                            {...register('password',{
+                            required: {
+                                value: true,
+                                message: 'Contraseña requerida'
+                            },
+                            minLength: {
+                                value: 5,
+                                message: 'La contraseña debe tener minimo 5 carácteres'
+                            },
+                            maxLength: {
+                                value: 20,
+                                message: 'La contraseña debe tener como máximo 20 carácteres'
+                            },
+                        })}  
+                        />
+                        <button type="button" className="ml-2 cursor-pointer">
+                            <MdOutlineVisibilityOff />
+                        </button>
+                    </span>
+                </label>
+                {
+                    errors.password && <span className="text-red-600">{errors.password.message}</span>
+                }
+                <div className="p-2 mt-3 flex flex-col gap-3">
+                    <p className="text-center text-stone-700">
+                        <Link to='/algo' className="border-b border-violet-950 text-violet-950 font-bold hover:text-violet-700 transition-colors">Recuperar contraseña</Link>
+                    </p>                                       
+                </div>
+                {/* btn */}
+                <button type="submit" className="w-64 border-none cursor-pointer font-bold rounded-sm bg-gray-400 mt-15 p-2 text-lg text-gray-500 hover:scale-105 hover:bg-gray-500 hover:text-gray-400">Ingresar</button>
+            </form>
+        </section>        
+    </main>
+    );
+};
+export default LoginPage; 

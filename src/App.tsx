@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Login from './pages/auth/Login';
+import Login from './pages/auth/LoginPage';
 import Error404 from "./pages/Error404";
 
 const App = () => {
