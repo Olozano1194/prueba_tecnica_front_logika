@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 // form
 import { useForm } from "react-hook-form";
 //Mensajes
@@ -23,8 +22,13 @@ const LoginPage = () => {
 
     return (
     <main 
-        className="w-full min-h-screen bg-gray-600 flex flex-col justify-center items-center"
-        style={{ backgroundImage: `url(${imgFondo})`, backgroundRepeat: `no-repeat` }}
+        className="w-full min-h-screen flex flex-col justify-center items-center"
+        style={{ 
+            backgroundImage: `url(${imgFondo})`, 
+            backgroundRepeat: `no-repeat`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center' 
+        }}
     >
         <section className="w-[90%] bg-white rounded-sm p-7 shadow-lg md:w-[50%]">
             {/* Title section */}
