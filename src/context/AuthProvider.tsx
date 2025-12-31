@@ -5,44 +5,49 @@ import { getToken, setToken, removeToken } from '../utils/tokenStorage';
 import type { LoginCredentials } from '../types/auth.types';
 
 interface AuthProviderProps {
-    children: React.ReactNode;
-};
+  children: React.ReactNode;
+}
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-    const [loading, setLoading] = useState<boolean>(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        const token = getToken();
+  useEffect(() => {
+    const token = getToken();
+    if (token) {
+      setIsAuthenticated(true);
+    }
+    setLoading(false);
+  }, []);
 
-        if (token) {
-            setIsAuthenticated(true);
-        }
+  const login = async (credentials: LoginCredentials) => {
+    setLoading(true);
+    setError(null);
 
-        setLoading(false);
-    }, []);
+    try {
+      const token  = await loginApi(credentials);
+      setToken(token);
+      setIsAuthenticated(true);
+    } catch (err: unknown) {
+      setError('Usuario o contraseña incorrectos');
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const login = async (credentials: LoginCredentials): Promise<void> => {
-        const { token } = await loginApi(credentials);
-        setToken(token);
-        setIsAuthenticated(true);
-    };
+  const logout = () => {
+    removeToken();
+    setIsAuthenticated(false);
+  };
 
-    const logout = (): void => {
-        removeToken();
-        setIsAuthenticated(false);
-    };
-
-    return (
-        <AuthContext.Provider 
-            value={{ 
-                isAuthenticated, 
-                loading, 
-                login, 
-                logout 
-            }}
-        >
-            {children}
-        </AuthContext.Provider>
-    );
+  return (
+    <AuthContext.Provider
+      value={{ isAuthenticated, loading, error, login, logout }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
+

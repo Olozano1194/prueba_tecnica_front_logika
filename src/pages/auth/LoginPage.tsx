@@ -1,4 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 // form
 import { useForm } from "react-hook-form";
 //Mensajes
@@ -11,12 +13,34 @@ import { MdOutlineVisibilityOff } from "react-icons/md";
 import logo from "../../../public/logo.png";
 import imgFondo from "../../../public/img-fondo.png";
 
+
+type LoginFormValues = {
+    email: string;
+    password: string;
+};
+
 const LoginPage = () => {
     const navigate = useNavigate();
-    const {  register, handleSubmit, formState: {errors} } = useForm();
+    const {  register, handleSubmit, formState: {errors} } = useForm<LoginFormValues>();
+    const auth = useContext(AuthContext);
 
-    const onSubmit = handleSubmit(data => {
-        console.log(data);        
+    if (!auth) return null;
+
+    // const { login, loading, error } = auth;
+
+
+    const onSubmit = handleSubmit(async (data) => {
+        try {
+            await auth?.login({
+            username: data.email,
+            password: "AmuFK8G4Bh64Q1uX+IxQhw==",
+            });
+
+            toast.success('Login exitoso');
+            navigate('/admin');
+        } catch {
+            toast.error('Error al iniciar sesión');
+        }
     });
     
 
@@ -87,8 +111,8 @@ const LoginPage = () => {
                                 message: 'La contraseña debe tener minimo 5 carácteres'
                             },
                             maxLength: {
-                                value: 20,
-                                message: 'La contraseña debe tener como máximo 20 carácteres'
+                                value: 100,
+                                message: 'La contraseña debe tener como máximo 100 carácteres'
                             },
                         })}  
                         />
@@ -106,8 +130,14 @@ const LoginPage = () => {
                     </p>                                       
                 </div>
                 {/* btn */}
-                <button type="submit" className="w-64 border-none cursor-pointer font-bold rounded-sm bg-gray-400 mt-15 p-2 text-lg text-gray-500 hover:scale-105 hover:bg-gray-500 hover:text-gray-400">Ingresar</button>
+                <button 
+                    type="submit" 
+                    className="w-64 border-none cursor-pointer font-bold rounded-sm bg-gray-400 mt-15 p-2 text-lg text-gray-500 hover:scale-105 hover:bg-gray-500 hover:text-gray-400"
+                >
+                    {/* {loading ? 'Ingresando...' : 'Ingresar'} */}
+                </button>
             </form>
+            {/* {error && <span className="text-red-600 text-sm mt-2 text-center">{error}</span>} */}
         </section>        
     </main>
     );
