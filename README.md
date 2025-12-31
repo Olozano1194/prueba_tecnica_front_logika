@@ -6,6 +6,36 @@ El enfoque principal fue la implementación de autenticación, consumo de endpoi
 
 ---
 
+## Demo Visual
+
+**Inicio Sesión**
+
+![alt text](image.png)
+
+**Validaciones en el login**
+
+![alt text](image-1.png)
+
+![alt text](prueba.jpg)
+
+---
+
+**Dashboard**
+
+![alt text](prueba2.jpg)
+
+![alt text](image-4.png)
+
+---
+
+**Crear tipo de categoria**
+
+![alt text](image-5.png)
+
+**Validaciones**
+
+![alt text](image-6.png)
+
 ## Tecnologías utilizadas
 
 - **React + TypeScript**
@@ -27,8 +57,8 @@ cd nombre-del-proyecto
 
 ### Instalar dependencias
 
-````bash
-    npm run dev
+```bash
+npm run dev
 ```
 
 ## Autenticación
@@ -41,7 +71,7 @@ La aplicación implementa autenticación basada en **JWT**:
 
 ```http
 Authorization: Bearer {token}
-````
+```
 
 ## Listado de Acciones
 
