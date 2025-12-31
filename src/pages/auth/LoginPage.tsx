@@ -26,14 +26,14 @@ const LoginPage = () => {
 
     if (!auth) return null;
 
-    // const { login, loading, error } = auth;
+    const { login, loading, error } = auth;
 
 
     const onSubmit = handleSubmit(async (data) => {
         try {
-            await auth?.login({
+            await login({
             username: data.email,
-            password: "AmuFK8G4Bh64Q1uX+IxQhw==",
+            password: data.password,
             });
 
             toast.success('Login exitoso');
@@ -57,7 +57,7 @@ const LoginPage = () => {
         <section className="w-[90%] bg-white rounded-sm p-7 shadow-lg md:w-[50%]">
             {/* Title section */}
             <section className="w-full flex justify-center">
-                <img src={logo} alt="logo de la empresa" className="w-20 h-24 self-start mt-2 -mr-5" />
+                <img src={logo} alt="logo de la empresa" className="w-10 h-10 self-start mt-2 mr-2" />
                 <div className="flex flex-col justify-center text-violet-950">
                     <h1 className="font-bold text-3xl leading-tight">vekind</h1>
                     <span className="text-lg -mt-2">network</span>
@@ -134,10 +134,10 @@ const LoginPage = () => {
                     type="submit" 
                     className="w-64 border-none cursor-pointer font-bold rounded-sm bg-gray-400 mt-15 p-2 text-lg text-gray-500 hover:scale-105 hover:bg-gray-500 hover:text-gray-400"
                 >
-                    {/* {loading ? 'Ingresando...' : 'Ingresar'} */}
+                    {loading ? 'Ingresando...' : 'Ingresar'}
                 </button>
             </form>
-            {/* {error && <span className="text-red-600 text-sm mt-2 text-center">{error}</span>} */}
+            {error && <span className="text-red-600 text-sm mt-2 text-center">{error}</span>}
         </section>        
     </main>
     );

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 //Table
 import { createColumnHelper } from '@tanstack/react-table';
 import type { ColumnDef } from "@tanstack/react-table";
@@ -32,7 +33,7 @@ const ListHome = () => {
             setLoading(true);
             try {
             const response = await getAdminActions();
-            console.log(response.data.data);
+            // console.log(response.data.data);
                         
             setData(response.data.data);
             } catch {
@@ -119,7 +120,7 @@ const ListHome = () => {
                 </label>
 
                 <div className=''>
-                    <button className='text-sm text-white bg-violet-950 p-3 rounded-lg cursor-pointer  lg:text-lg'>Crear tipo de categoria</button>
+                    <Link to='/categoria' className='text-sm text-white bg-violet-950 p-3 rounded-lg cursor-pointer  lg:text-lg'>Crear tipo de categoria</Link>
                 </div>                
             </section>
             {
