@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/auth/LoginPage';
 import LayoutAdmin from './components/layout/LayoutAdmin';
 import Home from './components/Home';
+import Categoria from './pages/auth/Categoria';
 import ProtectRoute from './routes/ProtectRoute';
 import Error404 from "./pages/Error404";
 
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="admin" element={<LayoutAdmin />}>
         <Route index element={<Home />} />
         </Route>
+        <Route path='categoria' element={<Categoria />} />
       </Route>       
       <Route path="*" element={<Error404 />} />
     </Routes>        
