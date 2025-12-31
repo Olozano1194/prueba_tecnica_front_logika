@@ -1,73 +1,98 @@
-# React + TypeScript + Vite
+# Bekind Admin Dashboard – Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este proyecto corresponde a una prueba técnica frontend para la gestión de acciones (categorías) en un panel administrativo, consumiendo una API externa.
 
-Currently, two official plugins are available:
+El enfoque principal fue la implementación de autenticación, consumo de endpoints protegidos y la creación de una acción mediante formulario.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Tecnologías utilizadas
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React + TypeScript**
+- **Vite**
+- **React Router DOM**
+- **Axios**
+- **React Hook Form**
+- **Tailwind CSS**
+- **React Hot Toast** – Feedback visual (éxito / error)
 
-## Expanding the ESLint configuration
+## Instalación y ejecución del proyecto
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Clonar el repositorio
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+git clone <url-del-repositorio>
+cd nombre-del-proyecto
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Instalar dependencias
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+````bash
+    npm run dev
 ```
+
+## Autenticación
+
+La aplicación implementa autenticación basada en **JWT**:
+
+- El login se realiza contra el endpoint: POST /Authentication/Login
+- El token recibido se almacena en `localStorage`
+- Las peticiones protegidas utilizan un `axiosPrivate` con interceptor para enviar el token en el header:
+
+```http
+Authorization: Bearer {token}
+````
+
+## Listado de Acciones
+
+- Las rutas protegidas se manejan con un ProtectedRoute
+
+- Se consume el endpoint: GET /api/v1/actions/admin-list
+- Los datos se muestran en el dashboard al iniciar sesión correctamente
+- El listado se refresca automáticamente después de crear una acción
+
+## Crear Acción (Formulario)
+
+- Endpoint utilizado: POST /api/v1/actions/admin-add
+
+**Campos implementados**
+
+Se seleccionaron los siguientes campos basados en la respuesta del endpoint de listado:
+
+- name (string)
+- description (string)
+- color (string - HEX)
+- status (number)
+
+Estos campos fueron seleccionados basándose en:
+
+- La respuesta del endpoint de listado
+- El diseño entregado en Figma
+
+**Validaciones**
+
+- Campos obligatorios
+- Longitud mínima en nombre y descripción
+- Feedback visual de error y éxito usando react-hot-toast
+
+**Errores que ocurrieron al querer crear datos**
+
+- El API no documenta el payload exacto para la creación de acciones.
+  A partir de pruebas con Insomnia y la respuesta del listado, se infirió que el endpoint requiere obligatoriamente el campo icon.
+
+- Flujo al crear una acción
+- El usuario completa el formulario
+- Se validan los datos
+- Se envía la información al API
+- En caso de éxito:
+- Se muestra un mensaje de confirmación
+- Se redirige al dashboard
+- Se refresca el listado
+
+## Notas finales
+
+- El proyecto prioriza claridad y buenas prácticas básicas
+- La estructura está pensada para facilitar mantenimiento
+- Algunas decisiones se tomaron en base a prueba y error debido a la falta de documentación del API
+
+## Gracias por la oportunidad
