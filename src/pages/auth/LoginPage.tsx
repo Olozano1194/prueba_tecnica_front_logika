@@ -54,7 +54,7 @@ const LoginPage = () => {
             backgroundPosition: 'center' 
         }}
     >
-        <section className="w-[90%] bg-white rounded-sm p-7 shadow-lg md:w-[50%]">
+        <section className="w-[90%] bg-white rounded-sm p-7 shadow-lg md:w-[50%] lg:w-[25%]">
             {/* Title section */}
             <section className="w-full flex justify-center">
                 <img src={logo} alt="logo de la empresa" className="w-10 h-10 self-start mt-2 mr-2" />

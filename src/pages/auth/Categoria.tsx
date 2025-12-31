@@ -59,7 +59,7 @@ const Categoria = () => {
     >
       <form
         onSubmit={onSubmit}
-        className="w-[92%] flex flex-col justify-center items-center bg-white p-4 rounded-sm shadow-lg md:w-[60%] md:p-8"
+        className="w-[92%] flex flex-col justify-center items-center bg-white p-4 rounded-sm shadow-lg md:w-[60%] md:p-8 lg:w-[30%]"
       >
         <h2 className="w-full text-2xl text-violet-950 font-bold">
           Crear categoria
@@ -98,7 +98,7 @@ const Categoria = () => {
             {...register("description", {
               required: {
                 value: true,
-                message: "Correo requerido",
+                message: "Descripción requerida",
               },
               minLength: {
                 value: 10,
