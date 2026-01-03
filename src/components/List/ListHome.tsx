@@ -5,11 +5,13 @@ import { createColumnHelper } from "@tanstack/react-table";
 import type { ColumnDef } from "@tanstack/react-table";
 //Componente principal para la listas
 import Table from "../Table";
+// Component
+import SearchForm from "../formBusqueda/SearchForm";
 // API
 import { getAdminActions } from "../../api/action.api";
 // icons
-import { CiSearch, CiEdit } from "react-icons/ci";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import { CiEdit } from "react-icons/ci";
 
 interface ActionItem {
   nombre: string;
@@ -21,9 +23,7 @@ interface ActionItem {
 }
 
 const ListHome = () => {
-  const [data, setData] = useState<ActionItem[]>([]);
-  // const [filteredData, setFilteredData] = useState<number | null>(null);
-  // const [search, setSearch] = useState('');
+  const [data, setData] = useState<ActionItem[]>([]);  
   const [loading, setLoading] = useState(false);
   const [, setError] = useState<string | null>(null);
 
@@ -44,32 +44,7 @@ const ListHome = () => {
 
     fetchActions();
   }, []);
-
-  // Función en donde se buscan los datos
-  // const handleSearch = useCallback(async(user: string) => {
-  //     setLoading(true);
-  //     try {
-  //         const response = await axiosPrivate(user);
-  //         setData(response);
-  //     } catch (error) {
-  //         console.error('Error al buscar el miembro:', error);
-
-  //     }finally {
-  //         setLoading(false);
-  //     }
-  // }, []);
-
-  //Manejamos el evento de búsqueda
-  // const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //     const searchValue = e.target.value.toLowerCase();
-  //     setSearch(searchValue);
-
-  //     if (filteredData) clearTimeout(filteredData);
-
-  //     setFilteredData(setTimeout(() => {
-  //         handleSearch(searchValue)
-  //     }, 500));
-  // }
+  
 
   const columnHelper = createColumnHelper();
 
@@ -120,27 +95,7 @@ const ListHome = () => {
   return (
     <main className="cards bg-primary w-full flex flex-col justify-center  gap-y-4 pt-4 rounded-xl">
       {/* Busqueda */}
-      <form className="w-full flex justify-between gap-x-2">
-        <label className="w-full border border-gray-300 flex items-center gap-2 rounded-md outline-slate-400 p-2 md:w-1/2">
-          <CiSearch className="text-violet-700 font-bold" />
-          <input
-            type="text"
-            className="w-full outline-none"
-            placeholder="Buscar"
-            // value={search}
-            // onChange={handleSearchChange}
-          />
-        </label>
-
-        <div className="">
-          <Link
-            to="/categoria"
-            className="flex text-center text-sm text-white bg-violet-950 p-1 rounded-lg cursor-pointer md:py-2 md:px-4 md:hover:scale-105 lg:text-lg"
-          >
-            Crear tipo de categoria
-          </Link>
-        </div>
-      </form>
+      <SearchForm />
       {loading ? (
         <div className="text-center py-4">Cargando...</div>
       ) : (

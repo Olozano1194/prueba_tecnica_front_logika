@@ -58,7 +58,7 @@ const SideBar = () => {
             }}
           >
           <section className="w-full h-36 flex justify-center">
-              <img src={logo} alt="logo de la empresa" className="w-12 h-24 self-start mt-2 mr-2" />
+              <img src={logo} alt="logo de la empresa" className="w-10 h-16 self-start mt-6 mr-2" />
               <div className="flex flex-col justify-center text-violet-950">
                   <h1 className="font-bold text-3xl leading-tight">vekind</h1>
                   <span className="text-lg -mt-2">network</span>
