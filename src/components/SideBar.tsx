@@ -163,7 +163,7 @@ const SideBar = () => {
             <li>
               <button
                 onClick={handleLogOut}
-                className="w-48 flex items-center cursor-pointer gap-3 py-2 px-4 rounded-lg hover:bg-teal-100 text-gray-600 font-semibold transition-colors"
+                className="w-48 flex items-center cursor-pointer gap-3 py-2 px-4 rounded-lg hover:bg-teal-100 text-gray-600 font-semibold transition-colors md:w-full"
               >
                 <RiLogoutCircleLine className="text-gray-600" />
                 Cerrar Sesión

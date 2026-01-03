@@ -10,7 +10,7 @@ function LayoutAdmin() {
             
             <div className="xl:col-span-5">
                 <Header />
-                <div className="h-[90vh] overflow-y-scroll p-8">
+                <div className="h-[90vh] overflow-y-scroll p-4">
                     <Outlet />
                 </div> 
                 

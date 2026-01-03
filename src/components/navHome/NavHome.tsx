@@ -5,13 +5,13 @@ const NavHome = () => {
   return (
     <TabGroup>
       <TabList className="flex gap-x-20 text-gray-500 font-semibold md:text-lg lg:text-xl">
-        <Tab className="cursor-pointer outline-none data-selected:border-b-2 data-selected:border-violet-950 data-selected:text-violet-950">
+        <Tab className="cursor-pointer outline-none data-selected:border-b-2 data-selected:border-violet-950 data-selected:text-violet-950 transition-all">
           Categorias
         </Tab>
-        <Tab className="cursor-pointer outline-none data-selected:border-b-2 data-selected:border-violet-950 data-selected:text-violet-950">
+        <Tab className="cursor-pointer outline-none data-selected:border-b-2 data-selected:border-violet-950 data-selected:text-violet-950 transition-all">
           Tipos
         </Tab>
-        <Tab className="cursor-pointer outline-none data-selected:border-b-2 data-selected:border-violet-950 data-selected:text-violet-950">
+        <Tab className="cursor-pointer outline-none data-selected:border-b-2 data-selected:border-violet-950 data-selected:text-violet-950 transition-all">
           Filtros
         </Tab>
       </TabList>

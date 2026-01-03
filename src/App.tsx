@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/auth/LoginPage';
 import LayoutAdmin from './components/layout/LayoutAdmin';
 import Home from './components/Home';
-import Categoria from './pages/auth/Categoria';
+import Categoria from './pages/auth/CategoriaPage';
 import ProtectRoute from './routes/ProtectRoute';
 import Error404 from "./pages/Error404";
 
