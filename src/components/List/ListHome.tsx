@@ -105,9 +105,9 @@ const ListHome = () => {
     ] as ColumnDef<ActionItem>[];
 
     return (
-        <main className="cards bg-primary w-full flex flex-col justify-center  gap-y-4 p-4 rounded-xl">            
+        <main className="cards bg-primary w-full flex flex-col justify-center  gap-y-4 pt-4 rounded-xl">            
             {/* Busqueda */}
-            <section className="w-full flex justify-between gap-x-4 p-4">
+            <section className="w-full flex justify-between gap-x-2">
                 <label className="w-full border border-gray-300 flex items-center gap-2 rounded-md outline-slate-400 p-2 md:w-1/2">
                     <CiSearch className='text-violet-700 font-bold' />
                     <input 
@@ -120,7 +120,7 @@ const ListHome = () => {
                 </label>
 
                 <div className=''>
-                    <Link to='/categoria' className='text-sm text-white bg-violet-950 p-3 rounded-lg cursor-pointer  lg:text-lg'>Crear tipo de categoria</Link>
+                    <Link to='/categoria' className='flex text-sm text-white bg-violet-950 p-1 rounded-lg cursor-pointer  lg:text-lg'>Crear tipo de categoria</Link>
                 </div>                
             </section>
             {
