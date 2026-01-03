@@ -17,11 +17,15 @@ type CategoryFormValues = {
 
 const Categoria = () => {
   const Navigate = useNavigate();
+  const Max = 250;  
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<CategoryFormValues>();
+
+  const descriptionValue = watch("description") || "";
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -104,9 +108,14 @@ const Categoria = () => {
                 value: 10,
                 message: "Minimo 10 caracteres",
               },
+              maxLength: {
+                value: Max,
+                message: `Máximo ${Max} caracteres`,
+              },
             })}
           ></textarea>
         </label>
+        <span className={`w-full mt-0.5 text-sm text-right ${descriptionValue.length >= Max ? 'text-red-600' : 'text-gray-500'}`}>{descriptionValue.length} / {Max}</span>
         {errors.description && (
           <span className="text-red-600">{errors.description.message}</span>
         )}
@@ -149,16 +158,16 @@ const Categoria = () => {
         <div className="w-full flex justify-center gap-5 mt-20 mb-5">
           <button
             type="button"
-            className="w-full bg-white font-semibold p-2 rounded-sm cursor-pointer shadow-sm hover:text-gray-700 hover:border-2 hover:border-violet-950"
+            onClick={() => Navigate(-1)}
+            className="w-full bg-white border-2 border-transparent font-semibold p-2 rounded-sm cursor-pointer shadow-sm hover:text-gray-700 hover:border-violet-950 md:text-lg"            
           >
-            Cancelar{" "}
+            Cancelar
           </button>
 
           <button
             type="submit"
-            className="w-full bg-gray-400 font-semibold p-2 rounded-sm cursor-pointer text-gray-300 hover:bg-gray-600 hover:text-gray-300"
-          >
-            {" "}
+            className="w-full bg-gray-400 font-semibold p-2 rounded-sm cursor-pointer text-gray-300 hover:bg-gray-600 hover:text-gray-300 md:text-lg md:font-bold"
+          >            
             crear
           </button>
         </div>
