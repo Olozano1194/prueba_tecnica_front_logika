@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from 'react';
+import { AuthContext } from "../context/AuthContext";
 // icons
 import { 
   RiMenu3Line, 
@@ -30,13 +31,15 @@ export interface SubMenuState {
 const SideBar = () => {
   const navigate = useNavigate();
   const [toggleMenu, setToggleMenu] = useState(false);
-  const [, setLoggedOut] = useState(false); 
- 
+  const auth = useContext(AuthContext);
+
+  if (!auth) return null;
+  
+  const { logout } = auth; 
 
   // Esta función nos sirve para cerrar la sesión
   const handleLogOut = () => {
-    localStorage.removeItem("auth_token");
-    setLoggedOut(true);    
+    logout();
     navigate("/");
   };
 
