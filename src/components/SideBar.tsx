@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 // icons
 import { 
@@ -28,11 +28,17 @@ export interface SubMenuState {
 
 
 const SideBar = () => {
-  // const navigate = useNavigate();
-  const [toggleMenu, setToggleMenu] = useState(false); 
+  const navigate = useNavigate();
+  const [toggleMenu, setToggleMenu] = useState(false);
+  const [, setLoggedOut] = useState(false); 
  
 
-  
+  // Esta función nos sirve para cerrar la sesión
+  const handleLogOut = () => {
+    localStorage.removeItem("auth_token");
+    setLoggedOut(true);    
+    navigate("/");
+  };
 
   return (
     <>
@@ -156,7 +162,7 @@ const SideBar = () => {
           <ul className="flex flex-col gap-4">
             <li>
               <button
-                // onClick={handleLogOut}
+                onClick={handleLogOut}
                 className="w-48 flex items-center cursor-pointer gap-3 py-2 px-4 rounded-lg hover:bg-teal-100 text-gray-600 font-semibold transition-colors"
               >
                 <RiLogoutCircleLine className="text-gray-600" />
