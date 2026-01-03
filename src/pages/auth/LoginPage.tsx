@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 // form
 import { useForm } from "react-hook-form";
@@ -8,7 +8,7 @@ import { toast } from 'react-hot-toast';
 // icons
 import { AiOutlineMail } from "react-icons/ai";
 import { RiLockPasswordLine } from "react-icons/ri";
-import { MdOutlineVisibilityOff } from "react-icons/md";
+import { MdOutlineVisibilityOff, MdOutlineVisibility } from "react-icons/md";
 // logo
 import logo from "../../../public/logo.png";
 import imgFondo from "../../../public/img-fondo.png";
@@ -23,6 +23,7 @@ const LoginPage = () => {
     const navigate = useNavigate();
     const {  register, handleSubmit, formState: {errors} } = useForm<LoginFormValues>();
     const auth = useContext(AuthContext);
+    const [ showkPass, setShowPass ] = useState(false);
 
     if (!auth) return null;
 
@@ -42,6 +43,10 @@ const LoginPage = () => {
             toast.error('Error al iniciar sesión');
         }
     });
+
+    const handlePass = () => {
+        setShowPass(!showkPass);               
+    };
     
 
     return (
@@ -98,7 +103,7 @@ const LoginPage = () => {
                     <span className="w-full flex items-center border border-gray-400 mt-1.5 py-1 px-2 rounded-sm">
                         <RiLockPasswordLine className="mr-2 text-sky-700" />
                         <input 
-                            type="password" 
+                            type={ showkPass ? 'text' : 'password'} 
                             placeholder="Ingresa tu contraseña" 
                             className="w-80 flex-1 text-gray-600 outline-none"
                             {...register('password',{
@@ -116,8 +121,8 @@ const LoginPage = () => {
                             },
                         })}  
                         />
-                        <button type="button" className="ml-2 cursor-pointer">
-                            <MdOutlineVisibilityOff />
+                        <button type="button" onClick={handlePass} className="ml-2 cursor-pointer">
+                            {showkPass ? <MdOutlineVisibility /> : <MdOutlineVisibilityOff /> }
                         </button>
                     </span>
                 </label>
@@ -131,7 +136,7 @@ const LoginPage = () => {
                 </div>
                 {/* btn */}
                 <button 
-                    type="submit" 
+                    type="submit"                     
                     className="w-64 border-none cursor-pointer font-bold rounded-sm bg-gray-400 mt-15 p-2 text-lg text-gray-500 hover:scale-105 hover:bg-gray-500 hover:text-gray-400"
                 >
                     {loading ? 'Ingresando...' : 'Ingresar'}
