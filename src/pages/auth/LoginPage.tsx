@@ -129,6 +129,7 @@ const LoginPage = () => {
                 {
                     errors.password && <span className="text-red-600">{errors.password.message}</span>
                 }
+                {error && <span className="text-red-600 text-sm mt-6 text-center">{error}</span>}
                 <div className="p-2 mt-3 flex flex-col gap-3">
                     <p className="text-center text-stone-700">
                         <Link to='/algo' className="border-b border-violet-950 text-violet-950 font-bold hover:text-violet-700 transition-colors">Recuperar contraseña</Link>
@@ -142,7 +143,7 @@ const LoginPage = () => {
                     {loading ? 'Ingresando...' : 'Ingresar'}
                 </button>
             </form>
-            {error && <span className="text-red-600 text-sm mt-2 text-center">{error}</span>}
+            
         </section>        
     </main>
     );
