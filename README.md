@@ -18,13 +18,15 @@ El enfoque principal fue la implementación de autenticación, consumo de endpoi
 
 ![alt text](prueba.jpg)
 
+![alt text](image-7.png)
+
 ---
 
 **Dashboard**
 
-![alt text](prueba2.jpg)
+![alt text](image-8.png)
 
-![alt text](image-4.png)
+![alt text](image-9.png)
 
 ---
 
@@ -56,6 +58,12 @@ cd nombre-del-proyecto
 ```
 
 ### Instalar dependencias
+
+```bash
+npm install
+```
+
+### Inicialización del Proyecto
 
 ```bash
 npm run dev
