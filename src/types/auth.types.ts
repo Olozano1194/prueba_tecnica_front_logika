@@ -6,13 +6,10 @@ export interface LoginCredentials {
 
 export type LoginResponse = string;
 
-// export interface AuthState {
-//     token: string | null;
-//     isAuthenticated: boolean;
-//     loading: boolean;
-// };
-
-// export interface UserType {
-//     id: string;
-//     username: string;
-// }
+export interface CreateActionData {
+  name: string;
+  description: string;
+  // icon: File;
+  color: string;
+//   status: string;
+}

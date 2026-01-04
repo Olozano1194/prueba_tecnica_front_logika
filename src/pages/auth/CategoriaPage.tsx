@@ -6,18 +6,20 @@ import { createAction } from "../../api/action.api";
 //Mensajes
 import { toast } from "react-hot-toast";
 import imgFondo from "../../../public/img-fondo.png";
+import { useState } from "react";
 
 type CategoryFormValues = {
   name: string;
   description: string;
   color: string;
-  status: string;
-  icon: FileList;
 };
 
 const Categoria = () => {
   const Navigate = useNavigate();
-  const Max = 250;  
+  const Max = 250;
+  const [loading, setLoading] = useState(false);
+  const [iconFile, setIconFile] = useState<File | null>(null);
+  // const [, setPreviewIcon] = useState<string>("");
   const {
     register,
     handleSubmit,
@@ -27,27 +29,38 @@ const Categoria = () => {
 
   const descriptionValue = watch("description") || "";
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setIconFile(file);
+    }
+  };
+
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const formData = new FormData();
+      setLoading(true);
 
-      formData.append("name", data.name);
-      formData.append("description", data.description);
-      formData.append("color", data.color);
-      formData.append("status", "1");
-
-      if (data.icon && data.icon[0]) {
-        formData.append("icon", data.icon[0]);
+      if (!iconFile) {
+        toast.error("Debes seleccionar un ícono");
+        return;
       }
 
-      console.log([...formData.entries()]);
+      // console.log("Enviando datos:", {
+      //   name: data.name,
+      //   description: data.description,
+      //   color: data.color,
+      //   iconFile: iconFile.name,
+      // });
 
-      await createAction(formData);
+      await createAction(data, iconFile);
 
+      // console.log("Respuesta exitosa:", response);
       toast.success("Categoría creada correctamente");
       Navigate("/admin");
     } catch {
       toast.error("Error al crear categoría");
+    } finally {
+      setLoading(false);
     }
   });
 
@@ -115,16 +128,33 @@ const Categoria = () => {
             })}
           ></textarea>
         </label>
-        <span className={`w-full mt-0.5 text-sm text-right ${descriptionValue.length >= Max ? 'text-red-600' : 'text-gray-500'}`}>{descriptionValue.length} / {Max}</span>
+        <span
+          className={`w-full mt-0.5 text-sm text-right ${
+            descriptionValue.length >= Max ? "text-red-600" : "text-gray-500"
+          }`}
+        >
+          {descriptionValue.length} / {Max}
+        </span>
         {errors.description && (
           <span className="text-red-600">{errors.description.message}</span>
         )}
         {/* icon */}
-        {/* <input
-          type="file"
-          accept="image/*"
-          {...register("icon", { required: true })}
-        /> */}
+        <div className="w-full">
+          <label className="block text-sm font-medium mb-2">
+            Ícono (Archivo SVG/PNG) *
+          </label>
+          <input
+            type="file"
+            accept=".svg,.png,.jpg,.jpeg"
+            onChange={handleFileChange}
+            className="w-full px-4 py-2 border border-gray-400 rounded-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          {!iconFile && (
+            <span className="text-gray-500 text-sm">
+              Selecciona un archivo de imagen
+            </span>
+          )}          
+        </div>
 
         {/* Color */}
         <label className="w-full flex flex-col text-gray-950 mt-4">
@@ -138,6 +168,18 @@ const Categoria = () => {
                 value: true,
                 message: "Color requerido",
               },
+              minLength: {
+                value: 3,
+                message: "Minimo 3 caracteres",
+              },
+              maxLength: {
+                value: 7,
+                message: "Máximo 7 caracteres",
+              },
+              pattern: {
+                value: /^#([A-Fa-f0-9]{3}){1,2}$/,
+                message: "Formato de color HEX invalido",
+              },
             })}
           />
         </label>
@@ -145,7 +187,7 @@ const Categoria = () => {
           <span className="text-red-600">{errors.color.message}</span>
         )}
         {/* Status */}
-        <span className="w-full mt-4 flex gap-2">
+        {/* <span className="w-full mt-4 flex gap-2">
           <input
             type="radio"
             className="bg-green-200"
@@ -153,13 +195,13 @@ const Categoria = () => {
             {...register("status", { required: true })}
           />
           Activar
-        </span>
+        </span> */}
 
         <div className="w-full flex justify-center gap-5 mt-20 mb-5">
           <button
             type="button"
             onClick={() => Navigate(-1)}
-            className="w-full bg-white border-2 border-transparent font-semibold p-2 rounded-sm cursor-pointer shadow-sm hover:text-gray-700 hover:border-violet-950 md:text-lg"            
+            className="w-full bg-white border-2 border-transparent font-semibold p-2 rounded-sm cursor-pointer shadow-sm hover:text-gray-700 hover:border-violet-950 md:text-lg"
           >
             Cancelar
           </button>
@@ -167,8 +209,8 @@ const Categoria = () => {
           <button
             type="submit"
             className="w-full bg-gray-400 font-semibold p-2 rounded-sm cursor-pointer text-gray-300 hover:bg-gray-600 hover:text-gray-300 md:text-lg md:font-bold"
-          >            
-            crear
+          >
+            {loading ? "Creando..." : "Crear"}
           </button>
         </div>
       </form>

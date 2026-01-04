@@ -2,10 +2,10 @@ import axios from 'axios';
 import { getToken } from '../utils/tokenStorage';
 
 export const axiosPrivate = axios.create({
-  baseURL: 'https://dev.api.bekindnetwork.com/api',
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  baseURL: 'https://dev.api.bekindnetwork.com/api'
+  // headers: {
+  //   'Content-Type': 'application/json',
+  // },
 });
 
 // Agregar el token antes de cada request
